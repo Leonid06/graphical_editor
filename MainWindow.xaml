@@ -7,6 +7,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Canvas x:Name="drawCanvas" HorizontalAlignment="Left" Height="328" Margin="4,71,0,0" VerticalAlignment="Top" Width="785" Background="White"/>
+        <TabControl x:Name="toolsTabControl" HorizontalAlignment="Left" Height="70" Margin="10,2,0,0" VerticalAlignment="Top" Width="771">
+            <TabItem Header="Главная" HorizontalAlignment="Left" Width="60">
+                <Menu x:Name="mainMenu"/>
+            </TabItem>
+            <TabItem Header="Вид">
+                <Menu x:Name="viewMenu"/>
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </Window>
