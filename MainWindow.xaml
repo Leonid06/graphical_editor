@@ -11,16 +11,16 @@
             <RowDefinition Height="9*"/>
             <RowDefinition Height="208*"/>
         </Grid.RowDefinitions>
-        <Canvas x:Name="drawCanvas" HorizontalAlignment="Center" Height="388" Margin="0,18,0,0" VerticalAlignment="Top" Width="800" Background="White" Grid.Row="1"/>
+        <Canvas x:Name="drawCanvas" HorizontalAlignment="Center" Height="388" Margin="0,18,0,0" VerticalAlignment="Top" Width="800" Background="White" Grid.Row="1" MouseMove="drawCanvas_MouseMove" MouseLeftButtonDown="drawCanvas_MouseLeftButtonDown"/>
         <Menu x:Name="rootMenu" Height="33" VerticalAlignment="Top" Grid.RowSpan="2" Margin="1,0,1,0">
             <MenuItem Header="Save" Height="34" Width="57" FontWeight="Normal" FontSize="16"/>
-            <MenuItem x:Name="penMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" >
+            <MenuItem x:Name="penMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" Click="penMenuItem_Click" >
                 <MenuItem.Icon>
                     <Image Source="resources/pen_image.png" Margin="0,0,-10,-8"/>
                 </MenuItem.Icon>
                 
             </MenuItem>
-            <MenuItem x:Name="pencilMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" >
+            <MenuItem x:Name="pencilMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" Click="pencilMenuItem_Click" >
                 <MenuItem.Icon>
                     <Image Source="resources/pencil_image.png" Margin="0,0,-10,-8"/>
                 </MenuItem.Icon>
