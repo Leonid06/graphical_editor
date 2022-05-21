@@ -29,7 +29,7 @@ namespace graphical_editor
 
         enum  DrawMode
         {
-             Ellipse, Pen, Text
+             Ellipse, Pen, Pencil
         }
 
         enum Thickness
@@ -40,9 +40,11 @@ namespace graphical_editor
 
         public MainWindow()
         {
+            mode = DrawMode.Pen; 
             InitializeComponent();
         }
 
+        
         
 
 
