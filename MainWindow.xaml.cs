@@ -15,14 +15,36 @@ using System.Windows.Shapes;
 
 namespace graphical_editor
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
+    
     public partial class MainWindow : Window
     {
+        DrawMode mode;
+        Thickness thickness;
+        StrokeColor color; 
+
+        enum StrokeColor
+        {
+            Black, Red, Blue, Yellow, Green
+        }
+
+        enum  DrawMode
+        {
+             Ellipse, Pen, Text
+        }
+
+        enum Thickness
+        {
+            SMALL, MEDIUM , BIG 
+        }
+
+
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        
+
+
     }
 }

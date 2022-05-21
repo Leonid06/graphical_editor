@@ -1,4 +1,4 @@
-﻿<Window x:Class="graphical_editor.MainWindow"
+﻿<Window x:Name="mainWindow" x:Class="graphical_editor.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,16 +6,10 @@
         xmlns:local="clr-namespace:graphical_editor"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Canvas x:Name="drawCanvas" HorizontalAlignment="Left" Height="328" Margin="4,71,0,0" VerticalAlignment="Top" Width="785" Background="White"/>
-        <TabControl x:Name="toolsTabControl" HorizontalAlignment="Left" Height="70" Margin="10,2,0,0" VerticalAlignment="Top" Width="771">
-            <TabItem Header="Главная" HorizontalAlignment="Left" Width="60">
-                <Menu x:Name="mainMenu"/>
-            </TabItem>
-            <TabItem Header="Вид">
-                <Menu x:Name="viewMenu"/>
-            </TabItem>
-        </TabControl>
+    <Grid x:Name="rootGrid">
+        <Canvas x:Name="drawCanvas" HorizontalAlignment="Center" Height="388" Margin="0,36,0,0" VerticalAlignment="Top" Width="800" Background="White"/>
+        <Menu x:Name="rootMenu" Margin="0,0,2,401"/>
+
 
     </Grid>
 </Window>
