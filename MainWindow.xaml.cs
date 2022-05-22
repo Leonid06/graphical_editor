@@ -80,10 +80,7 @@ namespace graphical_editor
 
         private void drawCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if(e.ButtonState == MouseButtonState.Pressed)
-            {
-                currentPosition = e.GetPosition(drawCanvas);
-            }
+            currentPosition = e.GetPosition(drawCanvas);
         }
     }
 }
