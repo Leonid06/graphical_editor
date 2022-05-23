@@ -1,4 +1,4 @@
-﻿<Window x:Name="mainWindow" x:Class="graphical_editor.MainWindow"
+﻿<Window xmlns:syncfusion="http://schemas.syncfusion.com/wpf"  x:Name="mainWindow" x:Class="graphical_editor.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,20 +11,25 @@
             <RowDefinition Height="9*"/>
             <RowDefinition Height="208*"/>
         </Grid.RowDefinitions>
-        <Canvas x:Name="drawCanvas" HorizontalAlignment="Center" Height="388" Margin="0,18,0,0" VerticalAlignment="Top" Width="800" Background="White" Grid.Row="1" MouseMove="drawCanvas_MouseMove" MouseLeftButtonDown="drawCanvas_MouseLeftButtonDown"/>
-        <Menu x:Name="rootMenu" Height="33" VerticalAlignment="Top" Grid.RowSpan="2" Margin="1,0,1,0">
-            <MenuItem Header="Save" Height="34" Width="57" FontWeight="Normal" FontSize="16"/>
-            <MenuItem x:Name="penMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" Click="penMenuItem_Click" >
-                <MenuItem.Icon>
-                    <Image Source="resources/pen_image.png" Margin="0,0,-10,-8"/>
-                </MenuItem.Icon>
-                
+        <Canvas x:Name="drawCanvas" HorizontalAlignment="Center" Height="388" Margin="0,18,0,0" VerticalAlignment="Top" Width="800" Background="White" Grid.Row="1" MouseMove="drawCanvas_MouseMove" MouseLeftButtonDown="drawCanvas_MouseLeftButtonDown" Cursor="Pen"/>
+        <Menu x:Name="rootMenu" Height="33" VerticalAlignment="Top" Grid.RowSpan="2" Margin="1,0,1,0" Background="#FFDAD7D7">
+            <MenuItem x:Name="saveMenuItem" Header="Save" Height="34" Width="57" FontWeight="Normal" FontSize="16"/>
+            <MenuItem x:Name="colorPickerMenuItem" Header="Color" FontSize="16" >
+                <syncfusion:ColorPicker Name="colorPicker" Height="50" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="Black" />
             </MenuItem>
-            <MenuItem x:Name="pencilMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" Click="pencilMenuItem_Click" >
-                <MenuItem.Icon>
-                    <Image Source="resources/pencil_image.png" Margin="0,0,-10,-8"/>
-                </MenuItem.Icon>
+            <MenuItem x:Name="toolsMenuItem" Header="Tools" Height="34" Width="57" FontWeight="Normal" FontSize="16">
+                <MenuItem x:Name="penMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" Click="penMenuItem_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="resources/pen_image.png" Margin="0,0,-10,-8"/>
+                    </MenuItem.Icon>
 
+                </MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="thicknessMenuItem" Header="Thickness" Height="30" Width="79" FontWeight="Normal" FontSize="16"/>
+            <MenuItem x:Name="undoMenuItem"  Height="33" Width="26" FontWeight="Normal" FontSize="16" RenderTransformOrigin="26.288,0.598" Click="undoMenuItem_Click">
+                <MenuItem.Icon>
+                    <Image Source="resources/delete_image.png"/>
+                </MenuItem.Icon>
             </MenuItem>
         </Menu>
 

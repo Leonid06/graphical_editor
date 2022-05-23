@@ -15,14 +15,9 @@ using System.Windows.Shapes;
 
 namespace graphical_editor
 {
-    enum StrokeColor
-    {
-        Black, Red, Blue, Yellow, Green
-    }
-
     enum DrawMode
     {
-        Ellipse, Pen, Pencil
+        Ellipse, Pen, Pencil , Text
     }
 
     enum Thickness
@@ -34,17 +29,15 @@ namespace graphical_editor
     {
         DrawMode mode;
         Thickness thickness;
-        StrokeColor color;
         Point currentPosition; 
         Line drawLine; 
 
         public MainWindow()
         {
-            color = StrokeColor.Red;
             mode = DrawMode.Pen;
-            thickness = Thickness.MEDIUM;
-
+            thickness = Thickness.BIG;
             InitializeComponent();
+            colorPicker.Brush = new SolidColorBrush(Colors.Black); 
         }
 
        
@@ -64,13 +57,18 @@ namespace graphical_editor
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 drawLine = new Line();
-                Setup.setupLineColor(drawLine, color);
+                drawLine.Stroke = colorPicker.Brush;
+
                 Setup.setupLineThickness(drawLine, thickness);
 
                 drawLine.X1 = currentPosition.X;
                 drawLine.Y1 = currentPosition.Y;
+
+                
                 drawLine.X2 = e.GetPosition(drawCanvas).X;
                 drawLine.Y2 = e.GetPosition(drawCanvas).Y;
+                
+                
 
                 currentPosition = e.GetPosition(drawCanvas);
 
@@ -80,7 +78,15 @@ namespace graphical_editor
 
         private void drawCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            currentPosition = e.GetPosition(drawCanvas);
+            if(e.ButtonState == MouseButtonState.Pressed && !rootMenu.IsMouseOver)
+            {
+                currentPosition = e.GetPosition(drawCanvas);
+            }
+        }
+
+        private void undoMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            drawCanvas.Children.Clear();
         }
     }
 }
