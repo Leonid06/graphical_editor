@@ -12,9 +12,9 @@
             <RowDefinition Height="208*"/>
         </Grid.RowDefinitions>
         <Canvas x:Name="drawCanvas" HorizontalAlignment="Center" Height="388" Margin="0,18,0,0" VerticalAlignment="Top" Width="800" Background="White" Grid.Row="1" MouseMove="drawCanvas_MouseMove" MouseLeftButtonDown="drawCanvas_MouseLeftButtonDown" Cursor="Pen"/>
-        <Menu x:Name="rootMenu" Height="33" VerticalAlignment="Top" Grid.RowSpan="2" Margin="1,0,1,0" Background="#FFDAD7D7">
+        <Menu x:Name="rootMenu" Height="33" VerticalAlignment="Top" Grid.RowSpan="2" Margin="1,0,1,0" Background="#FFDAD7D7" GotMouseCapture="rootMenu_GotMouseCapture">
             <MenuItem x:Name="saveMenuItem" Header="Save" Height="34" Width="57" FontWeight="Normal" FontSize="16"/>
-            <MenuItem x:Name="colorPickerMenuItem" Header="Color" FontSize="16" >
+            <MenuItem x:Name="colorPickerMenuItem" Header="Color" Height ="34" FontSize="16" >
                 <syncfusion:ColorPicker Name="colorPicker" Height="50" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="Black" />
             </MenuItem>
             <MenuItem x:Name="toolsMenuItem" Header="Tools" Height="34" Width="57" FontWeight="Normal" FontSize="16">

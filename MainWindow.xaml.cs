@@ -30,7 +30,8 @@ namespace graphical_editor
         DrawMode mode;
         Thickness thickness;
         Point currentPosition; 
-        Line drawLine; 
+        Line drawLine;
+        bool capturedRootMenu = false;
 
         public MainWindow()
         {
@@ -61,9 +62,17 @@ namespace graphical_editor
 
                 Setup.setupLineThickness(drawLine, thickness);
 
-                drawLine.X1 = currentPosition.X;
-                drawLine.Y1 = currentPosition.Y;
-
+                if (capturedRootMenu)
+                {
+                    drawLine.X1 = e.GetPosition(drawCanvas).X;
+                    drawLine.Y1 = e.GetPosition(drawCanvas).Y;
+                    capturedRootMenu = false; 
+                }
+                else
+                {
+                    drawLine.X1 = currentPosition.X;
+                    drawLine.Y1 = currentPosition.Y;
+                }
                 
                 drawLine.X2 = e.GetPosition(drawCanvas).X;
                 drawLine.Y2 = e.GetPosition(drawCanvas).Y;
@@ -87,6 +96,11 @@ namespace graphical_editor
         private void undoMenuItem_Click(object sender, RoutedEventArgs e)
         {
             drawCanvas.Children.Clear();
+        }
+
+        private void rootMenu_GotMouseCapture(object sender, MouseEventArgs e)
+        {
+            capturedRootMenu = true; 
         }
     }
 }
