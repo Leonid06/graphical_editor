@@ -27,11 +27,9 @@ namespace graphical_editor
 
     public partial class MainWindow : Window
     {
-        DrawMode mode;
-        Thickness thickness;
-        Point currentPosition; 
-        Line drawLine;
-        bool capturedRootMenu = false;
+        private DrawMode mode;
+        private Thickness thickness;
+        private bool capturedRootMenu = false;
 
         public MainWindow()
         {
@@ -55,51 +53,18 @@ namespace graphical_editor
 
         private void drawCanvas_MouseMove(object sender, MouseEventArgs e)
         {
+
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                drawLine = new Line();
-                drawLine.Stroke = colorPicker.Brush;
-
-                Setup.setupLineThickness(drawLine, thickness);
-
-                if (capturedRootMenu)
-                {
-                    drawLine.X1 = e.GetPosition(drawCanvas).X;
-                    drawLine.Y1 = e.GetPosition(drawCanvas).Y;
-                    capturedRootMenu = false; 
-                }
-                else
-                {
-                    drawLine.X1 = currentPosition.X;
-                    drawLine.Y1 = currentPosition.Y;
-                }
-                
-                drawLine.X2 = e.GetPosition(drawCanvas).X;
-                drawLine.Y2 = e.GetPosition(drawCanvas).Y;
-                
-                
-
-                currentPosition = e.GetPosition(drawCanvas);
-                drawCanvas.Children.Add(drawLine);
+                EllipseBuilder.createEllipse(thickness, colorPicker, drawCanvas,e);
             }
         }
 
         private void drawCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if(e.ButtonState == MouseButtonState.Pressed && !rootMenu.IsMouseOver)
-            {
-                currentPosition = e.GetPosition(drawCanvas);
 
-                //скопировал с github(так проще было)
-                Ellipse el = new Ellipse();
-                Setup.setupEllipseThickness(el, thickness);
-                el.Stroke = new SolidColorBrush(colorPicker.Color);
-                el.Fill =  new SolidColorBrush(colorPicker.Color); 
-                
-                Canvas.SetTop(el, e.GetPosition(drawCanvas).Y);
-                Canvas.SetLeft(el, e.GetPosition(drawCanvas).X);
-                drawCanvas.Children.Add(el);
-            }
+                EllipseBuilder.createEllipse(thickness, colorPicker, drawCanvas, e);
+            
         }
 
         private void undoMenuItem_Click(object sender, RoutedEventArgs e)
@@ -109,12 +74,13 @@ namespace graphical_editor
 
         private void rootMenu_GotMouseCapture(object sender, MouseEventArgs e)
         {
-            capturedRootMenu = true; 
+            capturedRootMenu = true;
+         
         }
 
-        private void Ctrl_Z_Click(object sender, RoutedEventArgs e)
-        {
-            drawCanvas.Children.RemoveAt(drawCanvas.Children.Count - 1);
-        }
+        //private void ctrl_z_click(object sender, routedeventargs e)
+        //{
+        //    drawcanvas.children.removeat(drawcanvas.children.count - 1);
+        //}
     }
 }

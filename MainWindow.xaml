@@ -32,7 +32,6 @@
                     <Image Source="resources/delete_image.png"/>
                 </MenuItem.Icon>
             </MenuItem>
-            <xcad:MenuItemEx x:Name="Ctrl_Z" Width="49" Header="Ctrl+Z" Click="Ctrl_Z_Click"/>
         </Menu>
 
 
