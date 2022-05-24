@@ -90,6 +90,16 @@ namespace graphical_editor
             if(e.ButtonState == MouseButtonState.Pressed && !rootMenu.IsMouseOver)
             {
                 currentPosition = e.GetPosition(drawCanvas);
+
+                //скопировал с github(так проще было)
+                Ellipse el = new Ellipse();
+                Setup.setupEllipseThickness(el, thickness);
+                el.Stroke = new SolidColorBrush(colorPicker.Color);
+                el.Fill =  new SolidColorBrush(colorPicker.Color); 
+                
+                Canvas.SetTop(el, e.GetPosition(drawCanvas).Y);
+                Canvas.SetLeft(el, e.GetPosition(drawCanvas).X);
+                drawCanvas.Children.Add(el);
             }
         }
 
