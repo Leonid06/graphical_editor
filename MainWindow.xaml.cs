@@ -41,7 +41,7 @@ namespace graphical_editor
             colorPicker.Brush = new SolidColorBrush(Colors.Black); 
         }
 
-       
+
 
         private void penMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -80,7 +80,6 @@ namespace graphical_editor
                 
 
                 currentPosition = e.GetPosition(drawCanvas);
-
                 drawCanvas.Children.Add(drawLine);
             }
         }
@@ -111,6 +110,11 @@ namespace graphical_editor
         private void rootMenu_GotMouseCapture(object sender, MouseEventArgs e)
         {
             capturedRootMenu = true; 
+        }
+
+        private void Ctrl_Z_Click(object sender, RoutedEventArgs e)
+        {
+            drawCanvas.Children.RemoveAt(drawCanvas.Children.Count - 1);
         }
     }
 }
