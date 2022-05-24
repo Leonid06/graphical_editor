@@ -81,6 +81,15 @@ namespace graphical_editor
         private void drawCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             currentPosition = e.GetPosition(drawCanvas);
+            Ellipse el = new Ellipse();
+            el.StrokeThickness = 1;
+            el.Stroke = new SolidColorBrush(Colors.Red);
+            el.Fill = new SolidColorBrush(Colors.Red);
+            el.Height = 4;
+            el.Width = 4;
+            Canvas.SetTop(el, e.GetPosition(drawCanvas).Y);
+            Canvas.SetLeft(el, e.GetPosition(drawCanvas).X);
+            drawCanvas.Children.Add(el);
         }
     }
 }
