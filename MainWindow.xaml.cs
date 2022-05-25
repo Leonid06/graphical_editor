@@ -36,7 +36,7 @@ namespace graphical_editor
         public MainWindow()
         {
             mode = DrawMode.Pen;
-            thickness = Thickness.BIG;
+            thickness = Thickness.MEDIUM;
             InitializeComponent();
             colorPicker.Brush = new SolidColorBrush(Colors.Black); 
         }

@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 
 namespace graphical_editor
 {
-    internal class EllipseBuilder
+    static internal class EllipseBuilder
     {
    
 
@@ -38,18 +38,18 @@ namespace graphical_editor
             {
                 case Thickness.SMALL:
                     ellipse.StrokeThickness = 2;
-                    ellipse.Height = 2;
-                    ellipse.Width = 2;
+                    ellipse.Height = 6;
+                    ellipse.Width = 6;
                     return;
                 case Thickness.MEDIUM:
                     ellipse.StrokeThickness = 4;
-                    ellipse.Height = 4;
-                    ellipse.Width = 4;
+                    ellipse.Height = 10;
+                    ellipse.Width = 10;
                     return;
                 case Thickness.BIG:
                     ellipse.StrokeThickness = 5;
-                    ellipse.Height = 10;
-                    ellipse.Width = 10;
+                    ellipse.Height = 30;
+                    ellipse.Width = 30;
                     return;
             }
         }

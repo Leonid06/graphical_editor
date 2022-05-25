@@ -13,7 +13,7 @@ using Xceed.Wpf.Toolkit;
 
 namespace graphical_editor.element_builders
 {
-    internal class LineBuilder
+    static internal class LineBuilder
     {
         static Point currentPosition;
         static public void createLine(
@@ -23,11 +23,13 @@ namespace graphical_editor.element_builders
             MouseEventArgs e)
         {
             Line line = new Line();
-            line.X1 = currentPosition.X+5;
-            line.Y1 = currentPosition.Y+5;
-            line.X2 = e.GetPosition(canvas).X+5;
-            line.Y2 = e.GetPosition(canvas).Y+5;
             LineBuilder.setupLineThickness(line, thickness);
+
+            line.X1 = currentPosition.X + line.StrokeThickness / 2;
+            line.Y1 = currentPosition.Y + line.StrokeThickness / 2;
+            line.X2 = e.GetPosition(canvas).X + line.StrokeThickness / 2;
+            line.Y2 = e.GetPosition(canvas).Y + line.StrokeThickness / 2;
+
             line.Stroke = new SolidColorBrush(colorPicker.Color);
             currentPosition = e.GetPosition(canvas);
             canvas.Children.Add(line);
@@ -45,13 +47,13 @@ namespace graphical_editor.element_builders
             switch (thickness)
             {
                 case Thickness.SMALL:
-                    line.StrokeThickness = 7;
+                    line.StrokeThickness = 6;
                     return;
                 case Thickness.MEDIUM:
-                    line.StrokeThickness = 9;
+                    line.StrokeThickness = 10;
                     return;
                 case Thickness.BIG:
-                    line.StrokeThickness = 10;
+                    line.StrokeThickness = 30;
                     return;
             }
         }
