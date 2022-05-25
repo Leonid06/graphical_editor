@@ -1,5 +1,6 @@
 ﻿using graphical_editor.element_builders;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -79,9 +80,73 @@ namespace graphical_editor
          
         }
 
+        private void openMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+
+            openFileDialog.Filter = "All files (.)|.|png Photos (.png)|.png|Text files (.txt)|.txt";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                FileInfo fileInfo = new FileInfo(openFileDialog.FileName);
+
+                if (fileInfo.Extension.ToLower() == ".png")
+                {
+                    BitmapImage loadImage = new BitmapImage();
+                    loadImage.BeginInit();
+                    loadImage.UriSource = new Uri(fileInfo.FullName);
+                    loadImage.EndInit();
+                    ImageBrush i = new ImageBrush();
+                    i.ImageSource = loadImage;
+                    drawCanvas.Background = i;
+                    return;
+                }
+            }
+        }
+
+        private void saveMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog saveimg = new Microsoft.Win32.SaveFileDialog();
+            saveimg.DefaultExt = ".png";
+            saveimg.Filter = "Image (.png)|*.png";
+            saveimg.FileName = "1";
+            if (saveimg.ShowDialog() == true)
+            {
+                ToImageSource2(drawCanvas, saveimg.FileName);  //DragArena  - имя имеющегося канваса
+            }
+        }
+
         //private void ctrl_z_click(object sender, routedeventargs e)
         //{
         //    drawcanvas.children.removeat(drawcanvas.children.count - 1);
         //}
+
+        public static void ToImageSource2(Canvas canvas, string filename)
+        {
+
+            canvas.LayoutTransform = null;  //обнуляем маштабировние если было
+
+
+            //качество изображения
+            double dpi = 300;
+            double scale = dpi / 96;
+
+            Size size = canvas.RenderSize;
+            RenderTargetBitmap image = new RenderTargetBitmap((int)(size.Width * scale), (int)(size.Height * scale), dpi, dpi, PixelFormats.Pbgra32);
+            canvas.Measure(size);
+            canvas.Arrange(new Rect(size)); // This is important
+
+
+
+
+            image.Render(canvas);
+            PngBitmapEncoder encoder = new PngBitmapEncoder();  //конвертируем в png формат
+            encoder.Frames.Add(BitmapFrame.Create(image));
+            using (System.IO.FileStream file = System.IO.File.Create(filename))
+            {
+                encoder.Save(file);
+            }
+        }
+
     }
 }

@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <Canvas x:Name="drawCanvas" HorizontalAlignment="Left" Height="388" Margin="6,18,0,0" VerticalAlignment="Top" Width="800" Background="White" Grid.Row="1" MouseMove="drawCanvas_MouseMove" MouseLeftButtonDown="drawCanvas_MouseLeftButtonDown" Cursor="Pen"/>
         <Menu x:Name="rootMenu" Height="34" VerticalAlignment="Top" Grid.RowSpan="2" Margin="1,0,1,0" Background="#FFDAD7D7" GotMouseCapture="rootMenu_GotMouseCapture">
-            <MenuItem x:Name="saveMenuItem" Header="Save" Height="33" Width="56" FontWeight="Normal" FontSize="16" BorderThickness="4,1,1,1" ClipToBounds="True" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#00000000" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+            <MenuItem x:Name="saveMenuItem" Header="Save" Height="33" Width="56" FontWeight="Normal" FontSize="16" BorderThickness="4,1,1,1" ClipToBounds="True" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#00000000" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Click="saveMenuItem_Click"/>
             <MenuItem x:Name="colorPickerMenuItem" Header="Color" Height ="33" FontSize="16" FontWeight="Normal" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Width="52" >
                 <syncfusion:ColorPicker x:Name="colorPicker" Height="50" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="Black" />
             </MenuItem>
@@ -32,6 +32,7 @@
                     <Image Source="resources/delete_image.png"/>
                 </MenuItem.Icon>
             </MenuItem>
+            <MenuItem x:Name="openMenuItem" Header="Open" Height="33" Width="57" FontWeight="Normal" FontSize="16" FontStyle="Normal" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Click="openMenuItem_Click"/>
         </Menu>
 
 
