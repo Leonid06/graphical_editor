@@ -20,16 +20,27 @@ namespace graphical_editor.element_builders
             Thickness thickness,
             Syncfusion.Windows.Shared.ColorPicker colorPicker,
             Canvas canvas,
-            MouseEventArgs e)
+            MouseEventArgs e,
+            ref bool capturedRootMenu
+            )
         {
             Line line = new Line();
             LineBuilder.setupLineThickness(line, thickness);
 
             line.X1 = currentPosition.X + line.StrokeThickness / 2;
             line.Y1 = currentPosition.Y + line.StrokeThickness / 2;
-            line.X2 = e.GetPosition(canvas).X + line.StrokeThickness / 2;
-            line.Y2 = e.GetPosition(canvas).Y + line.StrokeThickness / 2;
 
+            if (!capturedRootMenu)
+            {
+                line.X2 = e.GetPosition(canvas).X + line.StrokeThickness / 2;
+                line.Y2 = e.GetPosition(canvas).Y + line.StrokeThickness / 2;
+            }
+            else
+            {
+                line.X2 = line.X1;
+                line.Y2 = line.Y1;
+                capturedRootMenu = false;
+            }
             line.Stroke = new SolidColorBrush(colorPicker.Color);
             currentPosition = e.GetPosition(canvas);
             canvas.Children.Add(line);

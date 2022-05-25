@@ -59,7 +59,7 @@ namespace graphical_editor
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 EllipseBuilder.createEllipse(thickness, colorPicker, drawCanvas,e);
-                LineBuilder.createLine(thickness, colorPicker, drawCanvas, e);
+                LineBuilder.createLine(thickness, colorPicker, drawCanvas, e, ref capturedRootMenu);
             }
         }
 
