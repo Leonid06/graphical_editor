@@ -18,8 +18,8 @@ namespace graphical_editor
 
         static public void createEllipse(
             Thickness thickness ,
-            ColorPicker colorPicker , 
-            Canvas canvas , 
+            ColorPicker colorPicker, 
+            Canvas canvas, 
             MouseEventArgs e)
         {
             Ellipse el = new Ellipse();

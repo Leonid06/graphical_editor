@@ -1,4 +1,5 @@
-﻿using System;
+﻿using graphical_editor.element_builders;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -57,14 +58,14 @@ namespace graphical_editor
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 EllipseBuilder.createEllipse(thickness, colorPicker, drawCanvas,e);
+                LineBuilder.createLine(thickness, colorPicker, drawCanvas, e);
             }
         }
 
         private void drawCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
-                EllipseBuilder.createEllipse(thickness, colorPicker, drawCanvas, e);
-            
+            EllipseBuilder.createEllipse(thickness, colorPicker, drawCanvas, e);
+            LineBuilder.SetCurrentPosition(drawCanvas, e);
         }
 
         private void undoMenuItem_Click(object sender, RoutedEventArgs e)
