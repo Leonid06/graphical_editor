@@ -36,12 +36,19 @@ namespace graphical_editor
 
         private void penMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            toolType = ToolType.Pen; 
+            toolType = ToolType.Pen;
+          
         }
 
         private void lineMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            toolType = ToolType.Line; 
+            toolType = ToolType.Line;
+         
+        }
+
+        private void eraserMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            toolType = ToolType.Eraser; 
         }
 
         private void drawCanvas_MouseMove(object sender, MouseEventArgs e)
@@ -119,6 +126,12 @@ namespace graphical_editor
         {
             thickness = thicknessPicker.thicknessSlider.Value;
             
+        }
+
+        private void mainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            drawCanvas.Height = this.Height - rootMenu.Height;
+            drawCanvas.Width = this.Width; 
         }
 
         
