@@ -9,23 +9,25 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Xceed.Wpf.Toolkit;
+
 
 namespace graphical_editor.element_builders
 {
     internal class LineBuilder
     {
         static Point currentPosition;
+        static int LineNum;  
         static public void createLine(
-            Thickness thickness,
-            Syncfusion.Windows.Shared.ColorPicker colorPicker,
+            double thickness,
+            Color color,
             Canvas canvas,
             MouseEventArgs e,
             ref bool capturedRootMenu
             )
         {
             Line line = new Line();
-            LineBuilder.setupLineThickness(line, thickness);
+
+            line.StrokeThickness = thickness;  
 
             line.X1 = currentPosition.X + line.StrokeThickness / 2;
             line.Y1 = currentPosition.Y + line.StrokeThickness / 2;
@@ -41,8 +43,46 @@ namespace graphical_editor.element_builders
                 line.Y2 = line.Y1;
                 capturedRootMenu = false;
             }
-            line.Stroke = new SolidColorBrush(colorPicker.Color);
+            line.Stroke = new SolidColorBrush(color);
+
             currentPosition = e.GetPosition(canvas);
+            canvas.Children.Add(line);
+        }
+
+        static public void createStraightLine(
+            double thickness,
+            Color color,
+            Canvas canvas,
+            MouseEventArgs e,
+            ref bool capturedRootMenu
+            )
+        {
+            Line line = new Line();
+
+            line.StrokeThickness = thickness; 
+            
+
+            line.X1 = currentPosition.X + line.StrokeThickness / 2;
+            line.Y1 = currentPosition.Y + line.StrokeThickness / 2;
+
+            if (!capturedRootMenu)
+            {
+                line.X2 = e.GetPosition(canvas).X + line.StrokeThickness / 2;
+                line.Y2 = e.GetPosition(canvas).Y + line.StrokeThickness / 2;
+            }
+            else
+            {
+                line.X2 = line.X1;
+                line.Y2 = line.Y1;
+                capturedRootMenu = false;
+            }
+            line.Stroke = new SolidColorBrush(color);
+
+            if (LineNum > 0)
+            {
+                canvas.Children.Remove(canvas.Children[canvas.Children.Count - 1]);
+            }
+            LineNum++;
             canvas.Children.Add(line);
         }
 
@@ -51,27 +91,14 @@ namespace graphical_editor.element_builders
             MouseEventArgs e)
         {
             currentPosition = e.GetPosition(canvas);
-        }
-
-        static public void setupLineThickness(Line line, Thickness thickness)
-        {
-            switch (thickness)
-            {
-                case Thickness.SMALL:
-                    line.StrokeThickness = 6;
-                    return;
-                case Thickness.MEDIUM:
-                    line.StrokeThickness = 10;
-                    return;
-                case Thickness.BIG:
-                    line.StrokeThickness = 30;
-                    return;
-            }
+            LineNum = 0;
         }
 
         internal static void SetCurrentPosition()
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

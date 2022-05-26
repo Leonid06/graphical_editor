@@ -1,26 +1,14 @@
 ﻿using graphical_editor.element_builders;
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Win32;
+
 
 namespace graphical_editor
 {
-    enum DrawMode
+    enum ToolType 
     {
-        Ellipse, Pen, Pencil , Text
+        Ellipse, Pen, Text, Eraser, Line, Rectangle
     }
 
     enum Thickness
@@ -30,44 +18,71 @@ namespace graphical_editor
 
     public partial class MainWindow : Window
     {
-        private DrawMode mode;
-        private Thickness thickness;
+        private ToolType toolType;
+        private Color color; 
+        private double thickness; 
         private bool capturedRootMenu = false;
 
         public MainWindow()
         {
-            mode = DrawMode.Pen;
-            thickness = Thickness.MEDIUM;
             InitializeComponent();
-            colorPicker.Brush = new SolidColorBrush(Colors.Black); 
+            colorPicker.Brush = new SolidColorBrush(Colors.Black);
+            toolType = ToolType.Pen;
+            color = colorPicker.Color;
+            thickness = thicknessPicker.thicknessSlider.Value; 
         }
 
 
 
         private void penMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            mode = DrawMode.Pen; 
+            toolType = ToolType.Pen; 
         }
 
-        private void pencilMenuItem_Click(object sender, RoutedEventArgs e)
+        private void lineMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            mode = DrawMode.Pencil;
+            toolType = ToolType.Line; 
         }
 
         private void drawCanvas_MouseMove(object sender, MouseEventArgs e)
         {
 
-            if (e.LeftButton == MouseButtonState.Pressed)
+
+            switch (toolType)
             {
-                EllipseBuilder.createEllipse(thickness, colorPicker, drawCanvas,e);
-                LineBuilder.createLine(thickness, colorPicker, drawCanvas, e, ref capturedRootMenu);
+                case ToolType.Pen:
+
+                    if (e.LeftButton == MouseButtonState.Pressed)
+                    {
+                        EllipseBuilder.createPenEllipse(thickness, color, drawCanvas, e);
+                        LineBuilder.createLine(thickness, color, drawCanvas, e, ref capturedRootMenu);
+                    }
+                    return;
+                case ToolType.Line:
+
+                    if (e.LeftButton == MouseButtonState.Pressed)
+                    {
+                        LineBuilder.createStraightLine(thickness, color, drawCanvas, e, ref capturedRootMenu);
+                    }
+                    return;
+
             }
         }
 
         private void drawCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            EllipseBuilder.createEllipse(thickness, colorPicker, drawCanvas, e);
-            LineBuilder.SetCurrentPosition(drawCanvas, e);
+            switch (toolType)
+            {
+                case ToolType.Pen:
+                    EllipseBuilder.createPenEllipse(thickness, color, drawCanvas, e);
+                    LineBuilder.SetCurrentPosition(drawCanvas, e);
+                    return;
+                case ToolType.Line:
+                    LineBuilder.SetCurrentPosition(drawCanvas, e);
+                    return; 
+
+            }
+
         }
 
         private void undoMenuItem_Click(object sender, RoutedEventArgs e)
@@ -78,7 +93,6 @@ namespace graphical_editor
         private void rootMenu_GotMouseCapture(object sender, MouseEventArgs e)
         {
             capturedRootMenu = true;
-         
         }
 
         private void openMenuItem_Click(object sender, RoutedEventArgs e)
@@ -88,11 +102,25 @@ namespace graphical_editor
 
         private void saveMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            FileBuilder.saveFile(drawCanvas); 
+            FileBuilder.saveFile(drawCanvas);
         }
 
-       
+    
+
+        private void colorPicker_ColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            color = colorPicker.Color;
+            thicknessPicker.setColor(color);
+        }
+
         
 
+        private void thicknessPicker_LostMouseCapture(object sender, MouseEventArgs e)
+        {
+            thickness = thicknessPicker.thicknessSlider.Value;
+            
+        }
+
+        
     }
 }

@@ -16,43 +16,45 @@ namespace graphical_editor
     {
    
 
-        static public void createEllipse(
-            Thickness thickness ,
-            ColorPicker colorPicker, 
+        static public void createPenEllipse(
+            double thickness,
+            Color color, 
             Canvas canvas, 
             MouseEventArgs e)
         {
             Ellipse el = new Ellipse();
-            EllipseBuilder.setupEllipseThickness(el, thickness);
-            el.Stroke = new SolidColorBrush(colorPicker.Color);
-            el.Fill = new SolidColorBrush(colorPicker.Color);
+
+            el.StrokeThickness = thickness;  
+            
+            el.Stroke = new SolidColorBrush(color);
+            el.Fill = new SolidColorBrush(color);
 
             Canvas.SetTop(el, e.GetPosition(canvas).Y);
             Canvas.SetLeft(el, e.GetPosition(canvas).X);
             canvas.Children.Add(el);
         }
 
-        static public void setupEllipseThickness(Ellipse ellipse, Thickness thickness)
+
+        static public void createDemoEllipse(
+            double thickness,
+            Canvas canvas,
+            Color color)
         {
-            switch (thickness)
-            {
-                case Thickness.SMALL:
-                    ellipse.StrokeThickness = 2;
-                    ellipse.Height = 6;
-                    ellipse.Width = 6;
-                    return;
-                case Thickness.MEDIUM:
-                    ellipse.StrokeThickness = 4;
-                    ellipse.Height = 10;
-                    ellipse.Width = 10;
-                    return;
-                case Thickness.BIG:
-                    ellipse.StrokeThickness = 5;
-                    ellipse.Height = 30;
-                    ellipse.Width = 30;
-                    return;
-            }
+            Ellipse el = new Ellipse();
+
+            el.StrokeThickness = thickness; 
+         
+            el.Stroke = new SolidColorBrush(color);
+            el.Fill = new SolidColorBrush(color);
+
+            Canvas.SetTop(el, canvas.Height / thickness / 2);
+            Canvas.SetLeft(el, canvas.Width / thickness / 2);
+            
+
+            canvas.Children.Add(el);
         }
+
+       
     }
 
     
