@@ -21,15 +21,17 @@
             <MenuItem x:Name="toolsMenuItem" Header="Tools" Height="33" Width="57" FontWeight="Normal" FontSize="16" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
                 <MenuItem x:Name="penMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" Click="penMenuItem_Click" >
                     <MenuItem.Icon>
-                        <Image Source="resources/pen_image.png" Margin="0,0,-10,-8"/>
+                        <Image Source="/resources/pen_image.png" Margin="0,0,-10,-8"/>
                     </MenuItem.Icon>
 
                 </MenuItem>
             </MenuItem>
-            <MenuItem x:Name="thicknessMenuItem" Header="Thickness" Height="33" Width="83" FontWeight="Normal" FontSize="16" FontStyle="Normal" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+            <MenuItem x:Name="thicknessMenuItem" Header="Thickness" Height="33" Width="83" FontWeight="Normal" FontSize="16" FontStyle="Normal" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
+               
+            </MenuItem>
             <MenuItem x:Name="undoMenuItem"  Height="33" Width="26" FontWeight="Normal" FontSize="16" RenderTransformOrigin="26.288,0.598" Click="undoMenuItem_Click" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
                 <MenuItem.Icon>
-                    <Image Source="resources/delete_image.png"/>
+                    <Image Source="/resources/delete_image.png"/>
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem x:Name="openMenuItem" Header="Open" Height="33" Width="57" FontWeight="Normal" FontSize="16" FontStyle="Normal" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Click="openMenuItem_Click"/>

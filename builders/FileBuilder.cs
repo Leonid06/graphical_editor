@@ -18,7 +18,7 @@ namespace graphical_editor.element_builders
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
-            openFileDialog.Filter = "All files (.)|.|PNG Photos (.png)|.png|Text files (.txt)|.txt";
+            openFileDialog.Filter = "PNG Photos (*.png)|*.png";
 
             if (openFileDialog.ShowDialog() == true)
             {
@@ -42,11 +42,11 @@ namespace graphical_editor.element_builders
         {
             SaveFileDialog saveimg = new SaveFileDialog();
             saveimg.DefaultExt = ".png";
-            saveimg.Filter = "Image (.png)|*.png";
+            saveimg.Filter = "Image (*.png)|*.png";
             saveimg.FileName = "1";
             if (saveimg.ShowDialog() == true)
             {
-                ToImageSource(canvas, saveimg.FileName); 
+                ToImageSource(canvas, saveimg.FileName);
             }
         }
 

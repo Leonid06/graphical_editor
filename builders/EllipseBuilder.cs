@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 
 namespace graphical_editor
 {
-    static internal class EllipseBuilder
+     internal class EllipseBuilder
     {
    
 

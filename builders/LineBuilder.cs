@@ -13,7 +13,7 @@ using Xceed.Wpf.Toolkit;
 
 namespace graphical_editor.element_builders
 {
-    static internal class LineBuilder
+    internal class LineBuilder
     {
         static Point currentPosition;
         static public void createLine(
