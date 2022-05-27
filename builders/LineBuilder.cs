@@ -88,7 +88,15 @@ namespace graphical_editor.element_builders
 
             if (LineNum > 0)
             {
-                canvas.Children.Remove(canvas.Children[canvas.Children.Count - 1]);
+                try
+                {
+                    canvas.Children.Remove(canvas.Children[canvas.Children.Count - 1]);
+                }
+                catch (Exception)
+                {
+                    
+                }
+                
             }
             LineNum++;
             canvas.Children.Add(line);

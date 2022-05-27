@@ -159,6 +159,9 @@
   <ItemGroup>
     <Resource Include="resources\text_image.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\eraser_cursor.cur" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
