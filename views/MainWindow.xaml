@@ -48,6 +48,12 @@
                     </MenuItem.Icon>
 
                 </MenuItem>
+                <MenuItem x:Name="ellipseMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" Click="ellipseMenuItem_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/resources/ellipse_image.png" Margin="0,0,-10,-8"/>
+                    </MenuItem.Icon>
+
+                </MenuItem>
             </MenuItem>
             <MenuItem x:Name="thicknessMenuItem" Header="Thickness" Height="33" Width="83" FontWeight="Normal" FontSize="16" FontStyle="Normal" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
                 <local:ThicknessPicker x:Name="thicknessPicker" Width="100" Height="100" LostMouseCapture="thicknessPicker_LostMouseCapture"/>

@@ -14,7 +14,7 @@ namespace graphical_editor.element_builders
 {
     internal class FileBuilder
     {
-        static public void openFile(Canvas canvas)
+        public void openFile(Canvas canvas)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
@@ -38,7 +38,7 @@ namespace graphical_editor.element_builders
             }
         }
 
-        static public void saveFile(Canvas canvas)
+        public void saveFile(Canvas canvas)
         {
             SaveFileDialog saveimg = new SaveFileDialog();
             saveimg.DefaultExt = ".png";

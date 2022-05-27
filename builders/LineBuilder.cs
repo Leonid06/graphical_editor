@@ -15,9 +15,9 @@ namespace graphical_editor.element_builders
 {
     internal class LineBuilder
     {
-        static Point currentPosition;
-        static int LineNum;  
-        static public void createLine(
+        Point currentPosition;
+        int LineNum;  
+        public void createLine(
             double thickness,
             Color color,
             Canvas canvas,
@@ -57,7 +57,7 @@ namespace graphical_editor.element_builders
             canvas.Children.Add(line);
         }
 
-        static public void createStraightLine(
+        public void createStraightLine(
             double thickness,
             Color color,
             Canvas canvas,
@@ -103,7 +103,7 @@ namespace graphical_editor.element_builders
         }
 
        
-        static public void SetCurrentPosition(
+        public void SetCurrentPosition(
             Canvas canvas,
             MouseEventArgs e)
         {
