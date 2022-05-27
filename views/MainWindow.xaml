@@ -30,6 +30,12 @@
                     </MenuItem.Icon>
 
                 </MenuItem>
+                <MenuItem x:Name="textMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" Click="textMenuItem_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="/resources/text_image.png" Margin="0,0,-10,-8"/>
+                    </MenuItem.Icon>
+
+                </MenuItem>
                 <MenuItem x:Name="lineMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" Click="lineMenuItem_Click" >
                     <MenuItem.Icon>
                         <Image Source="/resources/ruler_image.png" Margin="0,0,-10,-8"/>

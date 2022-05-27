@@ -22,6 +22,7 @@ namespace graphical_editor.element_builders
             Color color,
             Canvas canvas,
             MouseEventArgs e,
+            ToolType type,
             ref bool capturedRootMenu
             )
         {
@@ -43,7 +44,14 @@ namespace graphical_editor.element_builders
                 line.Y2 = line.Y1;
                 capturedRootMenu = false;
             }
-            line.Stroke = new SolidColorBrush(color);
+            if(type == ToolType.Pen)
+            {
+                line.Stroke = new SolidColorBrush(color);
+            } else
+            {
+                line.Stroke = new SolidColorBrush(Colors.White); 
+            }
+            
 
             currentPosition = e.GetPosition(canvas);
             canvas.Children.Add(line);
@@ -86,6 +94,7 @@ namespace graphical_editor.element_builders
             canvas.Children.Add(line);
         }
 
+       
         static public void SetCurrentPosition(
             Canvas canvas,
             MouseEventArgs e)

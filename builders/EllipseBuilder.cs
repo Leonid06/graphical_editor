@@ -20,19 +20,31 @@ namespace graphical_editor
             double thickness,
             Color color, 
             Canvas canvas, 
+            ToolType type,
             MouseEventArgs e)
         {
             Ellipse el = new Ellipse();
 
             el.StrokeThickness = thickness;  
+
+            if(type == ToolType.Pen)
+            {
+                el.Stroke = new SolidColorBrush(color);
+                el.Fill = new SolidColorBrush(color);
+            } else
+            {
+                el.Stroke = new SolidColorBrush(Colors.White);
+                el.Fill = new SolidColorBrush(Colors.White); 
+            }
             
-            el.Stroke = new SolidColorBrush(color);
-            el.Fill = new SolidColorBrush(color);
+            
 
             Canvas.SetTop(el, e.GetPosition(canvas).Y);
             Canvas.SetLeft(el, e.GetPosition(canvas).X);
             canvas.Children.Add(el);
         }
+
+        
 
 
         static public void createDemoEllipse(

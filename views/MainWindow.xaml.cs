@@ -1,4 +1,5 @@
-﻿using graphical_editor.element_builders;
+﻿using graphical_editor.builders;
+using graphical_editor.element_builders;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -51,42 +52,51 @@ namespace graphical_editor
             toolType = ToolType.Eraser; 
         }
 
+        private void textMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            toolType = ToolType.Text; 
+        }
+
         private void drawCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-
-
-            switch (toolType)
+            if(e.LeftButton == MouseButtonState.Pressed)
             {
-                case ToolType.Pen:
+                switch (toolType)
+                {
 
-                    if (e.LeftButton == MouseButtonState.Pressed)
-                    {
-                        EllipseBuilder.createPenEllipse(thickness, color, drawCanvas, e);
-                        LineBuilder.createLine(thickness, color, drawCanvas, e, ref capturedRootMenu);
-                    }
-                    return;
-                case ToolType.Line:
+                    case ToolType.Line:
 
-                    if (e.LeftButton == MouseButtonState.Pressed)
-                    {
                         LineBuilder.createStraightLine(thickness, color, drawCanvas, e, ref capturedRootMenu);
-                    }
-                    return;
+
+                        return;
+                    default:
+                        EllipseBuilder.createPenEllipse(thickness, color, drawCanvas, toolType, e);
+                        LineBuilder.createLine(thickness, color, drawCanvas, e, toolType, ref capturedRootMenu);
+
+                        return;
+
+
+                }
 
             }
+            
         }
 
         private void drawCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             switch (toolType)
             {
-                case ToolType.Pen:
-                    EllipseBuilder.createPenEllipse(thickness, color, drawCanvas, e);
-                    LineBuilder.SetCurrentPosition(drawCanvas, e);
-                    return;
                 case ToolType.Line:
                     LineBuilder.SetCurrentPosition(drawCanvas, e);
-                    return; 
+                    return;
+                case ToolType.Text:
+                    TextBuilder.createText(thickness, drawCanvas , color, e);
+                    return;
+                default:
+
+                    EllipseBuilder.createPenEllipse(thickness, color, drawCanvas, toolType, e);
+                    LineBuilder.SetCurrentPosition(drawCanvas, e);
+                    return;
 
             }
 
@@ -134,6 +144,6 @@ namespace graphical_editor
             drawCanvas.Width = this.Width; 
         }
 
-        
+       
     }
 }

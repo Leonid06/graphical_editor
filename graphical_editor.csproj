@@ -82,6 +82,8 @@
     <Compile Include="builders\FileBuilder.cs" />
     <Compile Include="builders\LineBuilder.cs" />
     <Compile Include="builders\EllipseBuilder.cs" />
+    <Compile Include="builders\RectangleBuilder.cs" />
+    <Compile Include="builders\TextBuilder.cs" />
     <Compile Include="views\ToolPicker.xaml.cs">
       <DependentUpon>ToolPicker.xaml</DependentUpon>
     </Compile>
@@ -153,6 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="resources\eraser_image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\text_image.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

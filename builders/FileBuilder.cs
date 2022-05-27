@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 
 namespace graphical_editor.element_builders
 {
-    static internal class FileBuilder
+    internal class FileBuilder
     {
         static public void openFile(Canvas canvas)
         {
