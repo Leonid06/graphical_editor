@@ -25,6 +25,8 @@ namespace graphical_editor
     public partial class MainWindow : Window
     {
         private TextBuilder textBuilder;
+        private LineBuilder lineBuilder;
+        private EllipseBuilder ellipseBuilder; 
         private ToolType toolType;
         private Color color; 
         private double thickness; 
@@ -39,46 +41,88 @@ namespace graphical_editor
             color = colorPicker.Color;
             thickness = thicknessPicker.thicknessSlider.Value;
             textBuilder = new TextBuilder();
+            lineBuilder = new LineBuilder();
+            ellipseBuilder = new EllipseBuilder();
+            setUpListeners();
+        }
+
+        private void setUpListeners()
+        {
+            penMenuItem.Click += onPenMenuItemClick;
+            lineMenuItem.Click += onLineMenuItemClick;
+            eraserMenuItem.Click += onEraserMenuItemClick;
+            textMenuItem.Click += onTextMenuItemClick;
+            undoMenuItem.Click += onUndoMenuItemClick;
+            openMenuItem.Click += onOpenMenuItemClick;
+            saveMenuItem.Click += onSaveMenuItemClick; 
+
+            canvas.MouseMove += onCanvasMouseMove;
+            canvas.MouseLeftButtonDown += onCanvasMouseLeftButtonDown;
+
+            rootMenu.GotMouseCapture += onRootMenuGotMouseCapture;
+            colorPicker.ColorChanged += onColorPickerColorChanged;
+            thicknessPicker.LostMouseCapture += onThicknessPickerLostMouseCapture;
+
+            mainWindow.SizeChanged += onMainWindowSizeChanged;
+
+
+
         }
 
 
 
-        private void penMenuItem_Click(object sender, RoutedEventArgs e)
+        private void onPenMenuItemClick(object sender, RoutedEventArgs e)
         {
             toolType = ToolType.Pen;
             canvas.Cursor = Cursors.Pen;
 
         }
 
-        private void lineMenuItem_Click(object sender, RoutedEventArgs e)
+        private void onLineMenuItemClick(object sender, RoutedEventArgs e)
         {
             toolType = ToolType.Line;
             canvas.Cursor = Cursors.Pen;
 
         }
 
-        private void eraserMenuItem_Click(object sender, RoutedEventArgs e)
+        private void onEraserMenuItemClick(object sender, RoutedEventArgs e)
         {
             toolType = ToolType.Eraser;
             canvas.Cursor = eraserCursor;
         }
 
-        private void textMenuItem_Click(object sender, RoutedEventArgs e)
+        private void onTextMenuItemClick(object sender, RoutedEventArgs e)
         {
             toolType = ToolType.Text;
             canvas.Cursor = Cursors.SizeAll;
         }
-
-        private void canvas_MouseMove(object sender, MouseEventArgs e)
+        private void onUndoMenuItemClick(object sender, RoutedEventArgs e)
         {
-            if(e.LeftButton == MouseButtonState.Pressed)
+            canvas.Children.Clear();
+            canvas.Background = new SolidColorBrush(Colors.White);
+        }
+
+        private void onOpenMenuItemClick(object sender, RoutedEventArgs e)
+        {
+            FileBuilder.openFile(canvas);
+        }
+
+        private void onSaveMenuItemClick(object sender, RoutedEventArgs e)
+        {
+            FileBuilder.saveFile(canvas);
+        }
+
+
+        private void onCanvasMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
                 switch (toolType)
                 {
 
                     case ToolType.Line:
 
-                        LineBuilder.createStraightLine(thickness, color, canvas, e, ref capturedRootMenu);
+                        lineBuilder.createStraightLine(thickness, color, canvas, e);
 
                         return;
                     case ToolType.Text:
@@ -91,14 +135,14 @@ namespace graphical_editor
                         else
                         {
                             toolType = ToolType.Text;
-                            canvas.Cursor = Cursors.SizeAll; 
+                            canvas.Cursor = Cursors.SizeAll;
                         }
-                      
+
                         return;
 
                     default:
-                        EllipseBuilder.createPenEllipse(thickness, color, canvas, toolType, e);
-                        LineBuilder.createLine(thickness, color, canvas, e, toolType, ref capturedRootMenu);
+                        ellipseBuilder.createPenEllipse(thickness, color, canvas, toolType, e);
+                        lineBuilder.createLine(thickness, color, canvas, e, toolType, ref capturedRootMenu);
 
                         return;
 
@@ -106,15 +150,15 @@ namespace graphical_editor
                 }
 
             }
-            
+
         }
 
-        private void canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void onCanvasMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             switch (toolType)
             {
                 case ToolType.Line:
-                    LineBuilder.SetCurrentPosition(canvas, e);
+                    lineBuilder.SetCurrentPosition(canvas, e);
                     return;
                 case ToolType.Text:
 
@@ -124,38 +168,25 @@ namespace graphical_editor
 
                 default:
 
-                    EllipseBuilder.createPenEllipse(thickness, color, canvas, toolType, e);
-                    LineBuilder.SetCurrentPosition(canvas, e);
+                    ellipseBuilder.createPenEllipse(thickness, color, canvas, toolType, e);
+                    lineBuilder.SetCurrentPosition(canvas, e);
                     return;
 
             }
 
         }
 
-        private void undoMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            canvas.Children.Clear();
-            canvas.Background = new SolidColorBrush(Colors.White); 
-        }
-
-        private void rootMenu_GotMouseCapture(object sender, MouseEventArgs e)
+        
+        private void onRootMenuGotMouseCapture(object sender, MouseEventArgs e)
         {
             capturedRootMenu = true;
         }
 
-        private void openMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            FileBuilder.openFile(canvas);
-        }
-
-        private void saveMenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            FileBuilder.saveFile(canvas);
-        }
+        
 
     
 
-        private void colorPicker_ColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private void onColorPickerColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             color = colorPicker.Color;
             thicknessPicker.setColor(color);
@@ -163,13 +194,13 @@ namespace graphical_editor
 
         
 
-        private void thicknessPicker_LostMouseCapture(object sender, MouseEventArgs e)
+        private void onThicknessPickerLostMouseCapture(object sender, MouseEventArgs e)
         {
             thickness = thicknessPicker.thicknessSlider.Value;
             
         }
 
-        private void mainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void onMainWindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
             canvas.Height = this.Height - rootMenu.Height;
             canvas.Width = this.Width; 

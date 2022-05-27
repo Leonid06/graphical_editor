@@ -7,7 +7,7 @@
              mc:Ignorable="d" Height="100" Width="100">
     <Grid Height="100" VerticalAlignment="Top" HorizontalAlignment="Left" Width="100">
         <Canvas x:Name="thicknessCanvas"   HorizontalAlignment="Left" Width="50" Height="50" Margin="6,30,0,20"/>
-        <Slider x:Name="thicknessSlider"  VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Maximum="50" Minimum="1" Value="10" ValueChanged="thicknessSlider_ValueChanged" Height="28" Margin="54,0,-19,0">
+        <Slider x:Name="thicknessSlider"  VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Maximum="50" Minimum="1" Value="10"  Height="28" Margin="54,0,-19,0">
             <Slider.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
