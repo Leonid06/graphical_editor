@@ -29,7 +29,7 @@ namespace graphical_editor
         private Color color; 
         private double thickness; 
         private bool capturedRootMenu = false;
-        private Cursor eraserCursor = new Cursor("C:/Users/User/source/repos/graphical_editor/resources/eraser_cursor.cur"); 
+        //private Cursor eraserCursor = new Cursor("C:/Users/User/source/repos/graphical_editor/resources/eraser_cursor.cur"); 
 
         public MainWindow()
         {
@@ -60,7 +60,7 @@ namespace graphical_editor
         private void eraserMenuItem_Click(object sender, RoutedEventArgs e)
         {
             toolType = ToolType.Eraser;
-            canvas.Cursor = eraserCursor;
+            //canvas.Cursor = eraserCursor;
         }
 
         private void textMenuItem_Click(object sender, RoutedEventArgs e)
@@ -95,6 +95,9 @@ namespace graphical_editor
                         }
                       
                         return;
+                    case ToolType.Ellipse:
+                        EllipseBuilder.createDemoEllipse(thickness, color, canvas, e);
+                        return;
 
                     default:
                         EllipseBuilder.createPenEllipse(thickness, color, canvas, toolType, e);
@@ -120,7 +123,9 @@ namespace graphical_editor
 
                     textBuilder.createText(thickness, canvas, color, e);
                     return;
-
+                case ToolType.Ellipse:
+                    EllipseBuilder.SetCurrentPosition(canvas, e);
+                    return;
 
                 default:
 
