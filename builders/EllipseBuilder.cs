@@ -14,11 +14,9 @@ namespace graphical_editor
 {
      internal class EllipseBuilder
     {
-
-        public EllipseBuilder() {}
    
 
-        public void createPenEllipse(
+        static public void createPenEllipse(
             double thickness,
             Color color, 
             Canvas canvas, 
@@ -28,7 +26,7 @@ namespace graphical_editor
             Ellipse el = new Ellipse();
 
             el.StrokeThickness = thickness;  
-           
+
             if(type == ToolType.Pen)
             {
                 el.Stroke = new SolidColorBrush(color);
@@ -49,7 +47,7 @@ namespace graphical_editor
         
 
 
-        public void createDemoEllipse(
+        static public void createDemoEllipse(
             double thickness,
             Canvas canvas,
             Color color)

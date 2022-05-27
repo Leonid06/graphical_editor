@@ -17,22 +17,18 @@ namespace graphical_editor
 {
     public partial class ThicknessPicker : UserControl
     {
-        private Color color;
-        private EllipseBuilder ellipseBuilder; 
+        private Color color; 
         
         public ThicknessPicker()
         {
             InitializeComponent();
-            ellipseBuilder = new EllipseBuilder(); 
-            ellipseBuilder.createDemoEllipse(thicknessSlider.Value, thicknessCanvas, color);
-            this.thicknessSlider.ValueChanged += onSliderValueChanged; 
-     
+            EllipseBuilder.createDemoEllipse(thicknessSlider.Value, thicknessCanvas, color);
         }
 
-        private void onSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void thicknessSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             thicknessCanvas.Children.Clear();
-            ellipseBuilder.createDemoEllipse(thicknessSlider.Value,thicknessCanvas , color); 
+            EllipseBuilder.createDemoEllipse(thicknessSlider.Value,thicknessCanvas , color); 
         }
 
 
@@ -40,7 +36,7 @@ namespace graphical_editor
         public void setColor(Color color)
         {
             this.color = color;
-            ellipseBuilder.createDemoEllipse(thicknessSlider.Value, thicknessCanvas, color);
+            EllipseBuilder.createDemoEllipse(thicknessSlider.Value, thicknessCanvas, color);
         }
 
       

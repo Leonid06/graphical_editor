@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:graphical_editor"
         xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"  x:Name="mainWindow" x:Class="graphical_editor.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" SizeChanged="mainWindow_SizeChanged">
     <Grid x:Name="rootGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="289*"/>
@@ -16,33 +16,33 @@
             <RowDefinition Height="9*"/>
             <RowDefinition Height="208*"/>
         </Grid.RowDefinitions>
-        <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="388" Margin="1,18,0,0" VerticalAlignment="Top" Width="800" Background="White" Grid.Row="1" Cursor="Pen" Grid.ColumnSpan="2"/>
-        <Menu x:Name="rootMenu" Height="34" VerticalAlignment="Top" Grid.RowSpan="2" Margin="1,0,1,0" Background="#FFDAD7D7" Grid.ColumnSpan="2">
-            <MenuItem x:Name="saveMenuItem" Header="Save" Height="33" Width="56" FontWeight="Normal" FontSize="16" BorderThickness="4,1,1,1" ClipToBounds="True" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#00000000" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
-            <MenuItem x:Name="openMenuItem" Header="Open" Height="33" Width="57" FontWeight="Normal" FontSize="16" FontStyle="Normal" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
+        <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="388" Margin="1,18,0,0" VerticalAlignment="Top" Width="800" Background="White" Grid.Row="1" MouseMove="canvas_MouseMove" MouseLeftButtonDown="canvas_MouseLeftButtonDown" Cursor="Pen" Grid.ColumnSpan="2"/>
+        <Menu x:Name="rootMenu" Height="34" VerticalAlignment="Top" Grid.RowSpan="2" Margin="1,0,1,0" Background="#FFDAD7D7" GotMouseCapture="rootMenu_GotMouseCapture" Grid.ColumnSpan="2">
+            <MenuItem x:Name="saveMenuItem" Header="Save" Height="33" Width="56" FontWeight="Normal" FontSize="16" BorderThickness="4,1,1,1" ClipToBounds="True" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#00000000" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Click="saveMenuItem_Click"/>
+            <MenuItem x:Name="openMenuItem" Header="Open" Height="33" Width="57" FontWeight="Normal" FontSize="16" FontStyle="Normal" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Click="openMenuItem_Click"/>
             <MenuItem x:Name="colorPickerMenuItem" Header="Color" Height ="33" FontSize="16" FontWeight="Normal" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" Width="52" >
-                <syncfusion:ColorPicker x:Name="colorPicker" Height="50" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="Black" />
+                <syncfusion:ColorPicker x:Name="colorPicker" Height="50" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="Black" ColorChanged="colorPicker_ColorChanged" />
             </MenuItem>
             <MenuItem x:Name="toolsMenuItem" Header="Tools" Height="33" Width="57" FontWeight="Normal" FontSize="16" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
-                <MenuItem x:Name="penMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" >
+                <MenuItem x:Name="penMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" Click="penMenuItem_Click" >
                     <MenuItem.Icon>
                         <Image Source="/resources/pen_image.png" Margin="0,0,-10,-8"/>
                     </MenuItem.Icon>
 
                 </MenuItem>
-                <MenuItem x:Name="textMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" >
+                <MenuItem x:Name="textMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" Click="textMenuItem_Click" >
                     <MenuItem.Icon>
                         <Image Source="/resources/text_image.png" Margin="0,0,-10,-8"/>
                     </MenuItem.Icon>
 
                 </MenuItem>
-                <MenuItem x:Name="lineMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" >
+                <MenuItem x:Name="lineMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" Click="lineMenuItem_Click" >
                     <MenuItem.Icon>
                         <Image Source="/resources/ruler_image.png" Margin="0,0,-10,-8"/>
                     </MenuItem.Icon>
 
                 </MenuItem>
-                <MenuItem x:Name="eraserMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" >
+                <MenuItem x:Name="eraserMenuItem" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="35" Click="eraserMenuItem_Click" >
                     <MenuItem.Icon>
                         <Image Source="/resources/eraser_image.png" Margin="0,0,-10,-8"/>
                     </MenuItem.Icon>
@@ -50,10 +50,10 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem x:Name="thicknessMenuItem" Header="Thickness" Height="33" Width="83" FontWeight="Normal" FontSize="16" FontStyle="Normal" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
-                <local:ThicknessPicker x:Name="thicknessPicker" Width="100" Height="100"/>
+                <local:ThicknessPicker x:Name="thicknessPicker" Width="100" Height="100" LostMouseCapture="thicknessPicker_LostMouseCapture"/>
 
             </MenuItem>
-            <MenuItem x:Name="undoMenuItem"  Height="33" Width="26" FontWeight="Normal" FontSize="16" RenderTransformOrigin="26.288,0.598" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
+            <MenuItem x:Name="undoMenuItem"  Height="33" Width="26" FontWeight="Normal" FontSize="16" RenderTransformOrigin="26.288,0.598" Click="undoMenuItem_Click" BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}">
                 <MenuItem.Icon>
                     <Image Source="/resources/delete_image.png"/>
                 </MenuItem.Icon>
