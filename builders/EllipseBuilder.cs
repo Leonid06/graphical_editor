@@ -16,8 +16,23 @@ namespace graphical_editor
     {
 
         private Point currentPosition;
+        private bool currentIsPreview = false; 
 
+       
         public EllipseBuilder() { }
+
+
+        public void deleteLastEllipse(Canvas canvas)
+        {
+            try
+            {
+                canvas.Children.Remove(canvas.Children[canvas.Children.Count - 1]);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
 
         public void createPenEllipse(
             double thickness,
@@ -44,34 +59,52 @@ namespace graphical_editor
 
             Canvas.SetTop(el, e.GetPosition(canvas).Y);
             Canvas.SetLeft(el, e.GetPosition(canvas).X);
+
             canvas.Children.Add(el);
         }
 
-        
+
 
 
         public void createClassicEllipse(
             double thickness,
             Color color,
             Canvas canvas,
-            MouseEventArgs e
+            MouseEventArgs e,
+            bool isPreview
             )
         {
+
+           
+
             Ellipse el = new Ellipse();
 
             el.StrokeThickness = thickness;
 
             el.Stroke = new SolidColorBrush(color);
-            el.Fill = new SolidColorBrush(Colors.White);
-
-            Canvas.SetTop(el, currentPosition.Y);
-            Canvas.SetLeft(el, currentPosition.X);
+            el.Fill = new SolidColorBrush(Colors.White); 
+            el.Fill.Opacity = 0;
 
             el.Height = Math.Abs(currentPosition.Y - e.GetPosition(canvas).Y);
             el.Width = Math.Abs(currentPosition.X - e.GetPosition(canvas).X);
 
+            Canvas.SetTop(el, Math.Min(currentPosition.Y , e.GetPosition(canvas).Y));
+            Canvas.SetLeft(el, Math.Min(currentPosition.X, e.GetPosition(canvas).X));
+    
+
+            
+
+
+            
+
+            if (isPreview)
+            {
+                this.deleteLastEllipse(canvas);
+            }
 
             canvas.Children.Add(el);
+
+            currentIsPreview = isPreview; 
         }
 
         public void createDemoEllipse(
@@ -103,6 +136,11 @@ namespace graphical_editor
             MouseEventArgs e)
         {
             currentPosition = e.GetPosition(canvas);
+        }
+
+        public bool isCurrentPreview()
+        {
+            return currentIsPreview;
         }
     }
 

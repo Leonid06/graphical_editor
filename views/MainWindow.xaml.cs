@@ -25,6 +25,11 @@ namespace graphical_editor
     public partial class MainWindow : Window
     {
         private TextBuilder textBuilder;
+        private EllipseBuilder ellipseBuilder;
+        private LineBuilder lineBuilder;
+        private RectangleBuilder rectangleBuilder;
+        private FileBuilder fileBuilder;
+
         private ToolType toolType;
         private Color color; 
         private double thickness; 
@@ -38,7 +43,12 @@ namespace graphical_editor
             toolType = ToolType.Pen;
             color = colorPicker.Color;
             thickness = thicknessPicker.thicknessSlider.Value;
+
             textBuilder = new TextBuilder();
+            ellipseBuilder = new EllipseBuilder();
+            lineBuilder = new LineBuilder();
+            rectangleBuilder = new RectangleBuilder();
+            fileBuilder = new FileBuilder(); 
         }
 
 
@@ -69,6 +79,12 @@ namespace graphical_editor
             canvas.Cursor = Cursors.SizeAll;
         }
 
+        private void ellipseMenuItem_Click(object sender , RoutedEventArgs e)
+        {
+            toolType = ToolType.Ellipse;
+            canvas.Cursor = Cursors.SizeAll; 
+        }
+
         private void canvas_MouseMove(object sender, MouseEventArgs e)
         {
             if(e.LeftButton == MouseButtonState.Pressed)
@@ -78,7 +94,7 @@ namespace graphical_editor
 
                     case ToolType.Line:
 
-                        LineBuilder.createStraightLine(thickness, color, canvas, e, ref capturedRootMenu);
+                        lineBuilder.createStraightLine(thickness, color, canvas, e, ref capturedRootMenu);
 
                         return;
                     case ToolType.Text:
@@ -96,12 +112,12 @@ namespace graphical_editor
                       
                         return;
                     case ToolType.Ellipse:
-                        EllipseBuilder.createDemoEllipse(thickness, color, canvas, e);
+                        ellipseBuilder.createClassicEllipse(thickness, color, canvas, e, true);
                         return;
 
                     default:
-                        EllipseBuilder.createPenEllipse(thickness, color, canvas, toolType, e);
-                        LineBuilder.createLine(thickness, color, canvas, e, toolType, ref capturedRootMenu);
+                        ellipseBuilder.createPenEllipse(thickness, color, canvas, toolType, e);
+                        lineBuilder.createLine(thickness, color, canvas, e, toolType, ref capturedRootMenu);
 
                         return;
 
@@ -117,24 +133,41 @@ namespace graphical_editor
             switch (toolType)
             {
                 case ToolType.Line:
-                    LineBuilder.SetCurrentPosition(canvas, e);
+                    lineBuilder.SetCurrentPosition(canvas, e);
                     return;
                 case ToolType.Text:
 
                     textBuilder.createText(thickness, canvas, color, e);
                     return;
                 case ToolType.Ellipse:
-                    EllipseBuilder.SetCurrentPosition(canvas, e);
+                    ellipseBuilder.SetCurrentPosition(canvas, e);
                     return;
 
                 default:
 
-                    EllipseBuilder.createPenEllipse(thickness, color, canvas, toolType, e);
-                    LineBuilder.SetCurrentPosition(canvas, e);
+                    ellipseBuilder.createPenEllipse(thickness, color, canvas, toolType, e);
+                    lineBuilder.SetCurrentPosition(canvas, e);
                     return;
 
             }
 
+        }
+
+        private void canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            switch (toolType)
+            {
+                case ToolType.Ellipse:
+                    if (!ellipseBuilder.isCurrentPreview())
+                    {
+                        ellipseBuilder.deleteLastEllipse(canvas);
+                    }
+                    ellipseBuilder.createClassicEllipse(thickness, color, canvas, e, false);
+                    return;
+                default:
+                    return;
+
+            }
         }
 
         private void undoMenuItem_Click(object sender, RoutedEventArgs e)
@@ -150,12 +183,12 @@ namespace graphical_editor
 
         private void openMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            FileBuilder.openFile(canvas);
+            fileBuilder.openFile(canvas);
         }
 
         private void saveMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            FileBuilder.saveFile(canvas);
+            fileBuilder.saveFile(canvas);
         }
 
     
@@ -180,5 +213,6 @@ namespace graphical_editor
             canvas.Width = this.Width; 
         }
 
+       
     }
 }
