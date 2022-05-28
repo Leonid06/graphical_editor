@@ -16,7 +16,7 @@ namespace graphical_editor.element_builders
     internal class LineBuilder
     {
         Point currentPosition;
-        int LineNum;  
+        int FigureNum;  
         public void createLine(
             double thickness,
             Color color,
@@ -86,7 +86,7 @@ namespace graphical_editor.element_builders
             }
             line.Stroke = new SolidColorBrush(color);
 
-            if (LineNum > 0)
+            if (FigureNum > 0)
             {
                 try
                 {
@@ -98,7 +98,7 @@ namespace graphical_editor.element_builders
                 }
                 
             }
-            LineNum++;
+            FigureNum++;
             canvas.Children.Add(line);
         }
 
@@ -108,7 +108,7 @@ namespace graphical_editor.element_builders
             MouseEventArgs e)
         {
             currentPosition = e.GetPosition(canvas);
-            LineNum = 0;
+            FigureNum = 0;
         }
 
         internal static void SetCurrentPosition()
@@ -116,6 +116,9 @@ namespace graphical_editor.element_builders
             throw new NotImplementedException();
         }
 
-
+        public void SetFigureNumZero()
+        {
+            FigureNum = 0;
+        }
     }
 }

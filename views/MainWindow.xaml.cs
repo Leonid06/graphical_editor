@@ -204,5 +204,12 @@ namespace graphical_editor
             canvas.Height = this.Height - rootMenu.Height;
             canvas.Width = this.Width;
         }
+
+        private void canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            lineBuilder.SetFigureNumZero();
+            ellipseBuilder.SetFigureNumZero();
+            rectangleBuilder.SetFigureNumZero();
+        }
     }
 }

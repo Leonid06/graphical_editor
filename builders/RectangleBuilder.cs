@@ -24,7 +24,6 @@ namespace graphical_editor.builders
             ref bool capturedRootMenu
             )
         {
-
             Rectangle a = new Rectangle();
             a.StrokeThickness = thickness;
             a.Stroke = new SolidColorBrush(color);
@@ -52,6 +51,11 @@ namespace graphical_editor.builders
         internal static void SetCurrentPosition()
         {
             throw new NotImplementedException();
+        }
+
+        public void SetFigureNumZero()
+        {
+            FigureNum = 0;
         }
     }
 }

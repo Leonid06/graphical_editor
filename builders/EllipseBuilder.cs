@@ -61,9 +61,6 @@ namespace graphical_editor
             bool isPreview
             )
         {
-
-           
-
             Ellipse el = new Ellipse();
 
             el.StrokeThickness = thickness;
@@ -116,6 +113,11 @@ namespace graphical_editor
             MouseEventArgs e)
         {
             currentPosition = e.GetPosition(canvas);
+            FigureNum = 0;
+        }
+
+        public void SetFigureNumZero()
+        {
             FigureNum = 0;
         }
     }
