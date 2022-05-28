@@ -14,7 +14,8 @@ namespace graphical_editor
         Text,
         Eraser,
         Line,
-        Rectangle
+        Rectangle,
+        TextEditing 
     }
 
     enum Thickness
@@ -104,24 +105,13 @@ namespace graphical_editor
 
                         return;
                     case ToolType.Text:
-
-                        if (!textBuilder.isFocused)
-                        {
-                            toolType = ToolType.Pen;
-                            canvas.Cursor = Cursors.Pen;
-                        }
-                        else
-                        {
-                            toolType = ToolType.Text;
-                            canvas.Cursor = Cursors.SizeAll;
-                        }
-
+                        textBuilder.createTextBox(thickness,canvas, e);
                         return;
                     case ToolType.Ellipse:
                         ellipseBuilder.createClassicEllipse(thickness, color, canvas, e, true);
                         return;
                     case ToolType.Rectangle:
-                        rectangleBuilder.createRectangle(thickness, color, canvas, e, ref capturedRootMenu);
+                        rectangleBuilder.createRectangle(thickness, color, canvas, e);
                         return;
 
                     default:
@@ -142,11 +132,13 @@ namespace graphical_editor
                     lineBuilder.SetCurrentPosition(canvas, e);
                     return;
                 case ToolType.Text:
-
-                    textBuilder.createText(thickness, canvas, color, e);
+                    textBuilder.SetCurrentPosition(canvas, e);
                     return;
                 case ToolType.Ellipse:
-                    ellipseBuilder.SetCurrentPosition(canvas, e);
+                    if (!textBuilder.isTextFocused())
+                    {
+                        ellipseBuilder.SetCurrentPosition(canvas, e);
+                    }
                     return;
                 case ToolType.Rectangle:
                     rectangleBuilder.SetCurrentPosition(canvas, e);
@@ -210,6 +202,7 @@ namespace graphical_editor
             lineBuilder.SetFigureNumZero();
             ellipseBuilder.SetFigureNumZero();
             rectangleBuilder.SetFigureNumZero();
+            textBuilder.SetFigureNumZero();
         }
     }
 }

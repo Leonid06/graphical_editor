@@ -14,14 +14,15 @@ namespace graphical_editor.builders
 {
     internal class RectangleBuilder
     {
-        Point currentPosition;
-        int FigureNum;
+        private Point currentPosition;
+        private int FigureNum;
+        
+
         public void createRectangle(
             double thickness,
             Color color,
             Canvas canvas,
-            MouseEventArgs e,
-            ref bool capturedRootMenu
+            MouseEventArgs e
             )
         {
             Rectangle a = new Rectangle();
@@ -29,15 +30,18 @@ namespace graphical_editor.builders
             a.Stroke = new SolidColorBrush(color);
             a.Fill = new SolidColorBrush(Colors.White);
             a.Fill.Opacity = 0;
+
             a.Height = Math.Abs(currentPosition.Y - e.GetPosition(canvas).Y);
             a.Width = Math.Abs(currentPosition.X - e.GetPosition(canvas).X);
             Canvas.SetTop(a, Math.Min(currentPosition.Y, e.GetPosition(canvas).Y));
             Canvas.SetLeft(a, Math.Min(currentPosition.X, e.GetPosition(canvas).X));
+
             if (FigureNum > 0)
             {
                 canvas.Children.Remove(canvas.Children[canvas.Children.Count - 1]);
             }
             FigureNum++;
+
             canvas.Children.Add(a);
         }
         public void SetCurrentPosition(

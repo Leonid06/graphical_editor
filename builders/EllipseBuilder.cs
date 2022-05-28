@@ -16,7 +16,7 @@ namespace graphical_editor
     {
 
         private Point currentPosition;
-        private int FigureNum;
+        private int figureNum;
 
 
         public EllipseBuilder() { }
@@ -75,11 +75,11 @@ namespace graphical_editor
             Canvas.SetTop(el, Math.Min(currentPosition.Y , e.GetPosition(canvas).Y));
             Canvas.SetLeft(el, Math.Min(currentPosition.X, e.GetPosition(canvas).X));
 
-            if (FigureNum > 0)
+            if (figureNum > 0)
             {
                 canvas.Children.Remove(canvas.Children[canvas.Children.Count - 1]);
             }
-            FigureNum++;
+            figureNum++;
 
             canvas.Children.Add(el);
         }
@@ -113,12 +113,12 @@ namespace graphical_editor
             MouseEventArgs e)
         {
             currentPosition = e.GetPosition(canvas);
-            FigureNum = 0;
+            figureNum = 0;
         }
 
         public void SetFigureNumZero()
         {
-            FigureNum = 0;
+            figureNum = 0;
         }
     }
 
