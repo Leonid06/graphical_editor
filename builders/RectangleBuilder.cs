@@ -1,8 +1,10 @@
 ﻿using System;
+using Syncfusion.Windows.Shared;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -12,6 +14,44 @@ namespace graphical_editor.builders
 {
     internal class RectangleBuilder
     {
-        
+        Point currentPosition;
+        int LineNum;
+        public void createRectangle(
+            double thickness,
+            Color color,
+            Canvas canvas,
+            MouseEventArgs e,
+            ref bool capturedRootMenu
+            )
+        {
+
+            Rectangle a = new Rectangle();
+            a.StrokeThickness = thickness;
+            a.Stroke = new SolidColorBrush(color);
+            a.Fill = new SolidColorBrush(Colors.White);
+            a.Fill.Opacity = 0;
+            a.Height = Math.Abs(currentPosition.Y - e.GetPosition(canvas).Y);
+            a.Width = Math.Abs(currentPosition.X - e.GetPosition(canvas).X);
+            Canvas.SetTop(a, Math.Min(currentPosition.Y, e.GetPosition(canvas).Y));
+            Canvas.SetLeft(a, Math.Min(currentPosition.X, e.GetPosition(canvas).X));
+            if (LineNum > 0)
+            {
+                canvas.Children.Remove(canvas.Children[canvas.Children.Count - 1]);
+            }
+            LineNum++;
+            canvas.Children.Add(a);
+        }
+        public void SetCurrentPosition(
+            Canvas canvas,
+            MouseEventArgs e)
+        {
+            currentPosition = e.GetPosition(canvas);
+            LineNum = 0;
+        }
+
+        internal static void SetCurrentPosition()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

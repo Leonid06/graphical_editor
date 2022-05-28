@@ -7,13 +7,13 @@ using System.Windows.Media;
 
 namespace graphical_editor
 {
-    enum ToolType 
+    enum ToolType
     {
-        Ellipse, 
-        Pen, 
-        Text, 
+        Ellipse,
+        Pen,
+        Text,
         Eraser,
-        Line, 
+        Line,
         Rectangle
     }
 
@@ -31,8 +31,8 @@ namespace graphical_editor
         private FileBuilder fileBuilder;
 
         private ToolType toolType;
-        private Color color; 
-        private double thickness; 
+        private Color color;
+        private double thickness;
         private bool capturedRootMenu = false;
         //private Cursor eraserCursor = new Cursor("C:/Users/User/source/repos/graphical_editor/resources/eraser_cursor.cur"); 
 
@@ -48,7 +48,7 @@ namespace graphical_editor
             ellipseBuilder = new EllipseBuilder();
             lineBuilder = new LineBuilder();
             rectangleBuilder = new RectangleBuilder();
-            fileBuilder = new FileBuilder(); 
+            fileBuilder = new FileBuilder();
         }
 
 
@@ -79,15 +79,21 @@ namespace graphical_editor
             canvas.Cursor = Cursors.SizeAll;
         }
 
-        private void ellipseMenuItem_Click(object sender , RoutedEventArgs e)
+        private void ellipseMenuItem_Click(object sender, RoutedEventArgs e)
         {
             toolType = ToolType.Ellipse;
-            canvas.Cursor = Cursors.SizeAll; 
+            canvas.Cursor = Cursors.SizeAll;
+        }
+
+        private void rectangleMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            toolType = ToolType.Rectangle;
+            canvas.Cursor = Cursors.SizeAll;
         }
 
         private void canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if(e.LeftButton == MouseButtonState.Pressed)
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
                 switch (toolType)
                 {
@@ -107,12 +113,15 @@ namespace graphical_editor
                         else
                         {
                             toolType = ToolType.Text;
-                            canvas.Cursor = Cursors.SizeAll; 
+                            canvas.Cursor = Cursors.SizeAll;
                         }
-                      
+
                         return;
                     case ToolType.Ellipse:
                         ellipseBuilder.createClassicEllipse(thickness, color, canvas, e, true);
+                        return;
+                    case ToolType.Rectangle:
+                        rectangleBuilder.createRectangle(thickness, color, canvas, e, ref capturedRootMenu);
                         return;
 
                     default:
@@ -125,7 +134,7 @@ namespace graphical_editor
                 }
 
             }
-            
+
         }
 
         private void canvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -142,7 +151,9 @@ namespace graphical_editor
                 case ToolType.Ellipse:
                     ellipseBuilder.SetCurrentPosition(canvas, e);
                     return;
-
+                case ToolType.Rectangle:
+                    rectangleBuilder.SetCurrentPosition(canvas, e);
+                    return;
                 default:
 
                     ellipseBuilder.createPenEllipse(thickness, color, canvas, toolType, e);
@@ -173,7 +184,7 @@ namespace graphical_editor
         private void undoMenuItem_Click(object sender, RoutedEventArgs e)
         {
             canvas.Children.Clear();
-            canvas.Background = new SolidColorBrush(Colors.White); 
+            canvas.Background = new SolidColorBrush(Colors.White);
         }
 
         private void rootMenu_GotMouseCapture(object sender, MouseEventArgs e)
@@ -191,7 +202,7 @@ namespace graphical_editor
             fileBuilder.saveFile(canvas);
         }
 
-    
+
 
         private void colorPicker_ColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -199,20 +210,18 @@ namespace graphical_editor
             thicknessPicker.setColor(color);
         }
 
-        
+
 
         private void thicknessPicker_LostMouseCapture(object sender, MouseEventArgs e)
         {
             thickness = thicknessPicker.thicknessSlider.Value;
-            
+
         }
 
         private void mainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             canvas.Height = this.Height - rootMenu.Height;
-            canvas.Width = this.Width; 
+            canvas.Width = this.Width;
         }
-
-       
     }
 }
