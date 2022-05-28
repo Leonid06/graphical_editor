@@ -16,23 +16,10 @@ namespace graphical_editor
     {
 
         private Point currentPosition;
-        private bool currentIsPreview = false; 
+        private int FigureNum;
 
-       
+
         public EllipseBuilder() { }
-
-
-        public void deleteLastEllipse(Canvas canvas)
-        {
-            try
-            {
-                canvas.Children.Remove(canvas.Children[canvas.Children.Count - 1]);
-            }
-            catch (Exception)
-            {
-
-            }
-        }
 
         public void createPenEllipse(
             double thickness,
@@ -90,21 +77,14 @@ namespace graphical_editor
 
             Canvas.SetTop(el, Math.Min(currentPosition.Y , e.GetPosition(canvas).Y));
             Canvas.SetLeft(el, Math.Min(currentPosition.X, e.GetPosition(canvas).X));
-    
 
-            
-
-
-            
-
-            if (isPreview)
+            if (FigureNum > 0)
             {
-                this.deleteLastEllipse(canvas);
+                canvas.Children.Remove(canvas.Children[canvas.Children.Count - 1]);
             }
+            FigureNum++;
 
             canvas.Children.Add(el);
-
-            currentIsPreview = isPreview; 
         }
 
         public void createDemoEllipse(
@@ -136,11 +116,7 @@ namespace graphical_editor
             MouseEventArgs e)
         {
             currentPosition = e.GetPosition(canvas);
-        }
-
-        public bool isCurrentPreview()
-        {
-            return currentIsPreview;
+            FigureNum = 0;
         }
     }
 

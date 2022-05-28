@@ -127,10 +127,7 @@ namespace graphical_editor
                     default:
                         ellipseBuilder.createPenEllipse(thickness, color, canvas, toolType, e);
                         lineBuilder.createLine(thickness, color, canvas, e, toolType, ref capturedRootMenu);
-
                         return;
-
-
                 }
 
             }
@@ -155,7 +152,6 @@ namespace graphical_editor
                     rectangleBuilder.SetCurrentPosition(canvas, e);
                     return;
                 default:
-
                     ellipseBuilder.createPenEllipse(thickness, color, canvas, toolType, e);
                     lineBuilder.SetCurrentPosition(canvas, e);
                     return;
@@ -164,22 +160,7 @@ namespace graphical_editor
 
         }
 
-        private void canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            switch (toolType)
-            {
-                case ToolType.Ellipse:
-                    if (!ellipseBuilder.isCurrentPreview())
-                    {
-                        ellipseBuilder.deleteLastEllipse(canvas);
-                    }
-                    ellipseBuilder.createClassicEllipse(thickness, color, canvas, e, false);
-                    return;
-                default:
-                    return;
-
-            }
-        }
+        
 
         private void undoMenuItem_Click(object sender, RoutedEventArgs e)
         {

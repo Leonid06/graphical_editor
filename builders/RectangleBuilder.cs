@@ -15,7 +15,7 @@ namespace graphical_editor.builders
     internal class RectangleBuilder
     {
         Point currentPosition;
-        int LineNum;
+        int FigureNum;
         public void createRectangle(
             double thickness,
             Color color,
@@ -34,11 +34,11 @@ namespace graphical_editor.builders
             a.Width = Math.Abs(currentPosition.X - e.GetPosition(canvas).X);
             Canvas.SetTop(a, Math.Min(currentPosition.Y, e.GetPosition(canvas).Y));
             Canvas.SetLeft(a, Math.Min(currentPosition.X, e.GetPosition(canvas).X));
-            if (LineNum > 0)
+            if (FigureNum > 0)
             {
                 canvas.Children.Remove(canvas.Children[canvas.Children.Count - 1]);
             }
-            LineNum++;
+            FigureNum++;
             canvas.Children.Add(a);
         }
         public void SetCurrentPosition(
@@ -46,7 +46,7 @@ namespace graphical_editor.builders
             MouseEventArgs e)
         {
             currentPosition = e.GetPosition(canvas);
-            LineNum = 0;
+            FigureNum = 0;
         }
 
         internal static void SetCurrentPosition()
