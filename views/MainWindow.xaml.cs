@@ -105,7 +105,7 @@ namespace graphical_editor
 
                         return;
                     case ToolType.Text:
-                        textBuilder.createTextBox(thickness,canvas, e);
+                            textBuilder.createTextBox(thickness, canvas, e);
                         return;
                     case ToolType.Ellipse:
                         ellipseBuilder.createClassicEllipse(thickness, color, canvas, e, true);
@@ -132,13 +132,18 @@ namespace graphical_editor
                     lineBuilder.SetCurrentPosition(canvas, e);
                     return;
                 case ToolType.Text:
-                    textBuilder.SetCurrentPosition(canvas, e);
-                    return;
-                case ToolType.Ellipse:
                     if (!textBuilder.isTextFocused())
                     {
-                        ellipseBuilder.SetCurrentPosition(canvas, e);
+                        textBuilder.SetCurrentPosition(canvas, e);
                     }
+                    else
+                    {
+                        Keyboard.Focus(textBuilder.getText());
+                    }
+                    return;
+                case ToolType.Ellipse:
+                    ellipseBuilder.SetCurrentPosition(canvas, e);
+
                     return;
                 case ToolType.Rectangle:
                     rectangleBuilder.SetCurrentPosition(canvas, e);

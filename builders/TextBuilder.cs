@@ -12,14 +12,15 @@ namespace graphical_editor.builders
     
         private Point currentPosition;
         private int FigureNum;
-        private bool isFocused; 
+        private bool isFocused;
+        private TextBox textBox; 
         public void createTextBox(
            double thickness,
            Canvas canvas,
            MouseEventArgs e
            )
         {
-            TextBox textBox = new TextBox();
+            textBox = new TextBox();
 
             textBox.MouseEnter += onGotFocus; 
 
@@ -31,13 +32,26 @@ namespace graphical_editor.builders
             textBox.Background = new SolidColorBrush(Colors.White); 
             textBox.Background.Opacity = 0; 
 
-            if (FigureNum > 0)
+            try
             {
-                canvas.Children.Remove(canvas.Children[canvas.Children.Count - 1]);
+                if (FigureNum > 0)
+                {
+                    canvas.Children.Remove(canvas.Children[canvas.Children.Count - 1]);
+                }
             }
+            catch
+            {
+
+            }
+           
             FigureNum++;
 
             canvas.Children.Add(textBox);
+        }
+
+        public TextBox getText()
+        {
+            return textBox;  
         }
 
         public bool isTextFocused()
