@@ -9,11 +9,16 @@ namespace graphical_editor.builders
 {
     internal class TextBuilder
     {
-    
+
         private Point currentPosition;
         private int FigureNum;
-        private bool isFocused;
-        private TextBox textBox; 
+        private bool isResizable;
+        private TextBox textBox;
+
+        public TextBuilder()
+        {
+            textBox = new TextBox();
+        }
         public void createTextBox(
            double thickness,
            Canvas canvas,
@@ -22,46 +27,50 @@ namespace graphical_editor.builders
         {
             textBox = new TextBox();
 
-            textBox.MouseEnter += onGotFocus; 
+            textBox.MouseLeftButtonDown += onLeftButtonDown;
 
             textBox.Height = Math.Abs(currentPosition.Y - e.GetPosition(canvas).Y);
             textBox.Width = Math.Abs(currentPosition.X - e.GetPosition(canvas).X);
             Canvas.SetTop(textBox, Math.Min(currentPosition.Y, e.GetPosition(canvas).Y));
             Canvas.SetLeft(textBox, Math.Min(currentPosition.X, e.GetPosition(canvas).X));
 
-            textBox.Background = new SolidColorBrush(Colors.White); 
-            textBox.Background.Opacity = 0; 
+            textBox.Background = new SolidColorBrush(Colors.White);
+            textBox.Background.Opacity = 0;
 
             try
-            {
-                if (FigureNum > 0)
-                {
-                    canvas.Children.Remove(canvas.Children[canvas.Children.Count - 1]);
-                }
-            }
+               {
+                   if (FigureNum > 0)
+                   {
+                        canvas.Children.Remove(canvas.Children[canvas.Children.Count - 1]);
+                   }
+               }
             catch
-            {
+               {
 
-            }
-           
-            FigureNum++;
+               }
 
-            canvas.Children.Add(textBox);
+                  FigureNum++;
+                  canvas.Children.Add(textBox);
+
+        }
+
+        private void onLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Keyboard.Focus(textBox);
         }
 
         public TextBox getText()
         {
             return textBox;  
         }
-
-        public bool isTextFocused()
+        public bool isTextResizable()
         {
-            return isFocused; 
+            return isResizable; 
         }
 
-        private void onGotFocus(object sender, RoutedEventArgs e)
+        public void setResizable(bool value)
         {
-            isFocused = true; 
+            isResizable = value;  
         }
 
         public void SetCurrentPosition(
@@ -70,6 +79,7 @@ namespace graphical_editor.builders
         {
             currentPosition = e.GetPosition(canvas);
             FigureNum = 0;
+
         }
 
         internal static void SetCurrentPosition()
