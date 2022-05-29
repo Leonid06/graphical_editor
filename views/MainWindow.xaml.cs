@@ -113,7 +113,7 @@ namespace graphical_editor
 
                                 return;
                             case ToolType.Text:
-                                textBuilder.createTextBox(thickness, canvas, e);
+                                //textBuilder.createTextBox(thickness, canvas, e);
                                 return;
                             case ToolType.Ellipse:
                                 ellipseBuilder.createClassicEllipse(thickness, color, canvas, e, true);
